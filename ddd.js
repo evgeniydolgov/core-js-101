@@ -1,11 +1,21 @@
-let num = 165536;
-function recursiv(x) {
-    x = x.toString().split('').reduce((acc, prev) => Number(acc) + Number(prev));
-    if (x > 9) {
-        recursiv(x);
+function getPolynom(...arg) {
+    let x;
+    if (arg.length === 3) {
+        x = arg[0] * (x ** 2) + x * arg[1] + arg[2];
     }
-    return console.log(x);;
+    if (arg.length === 2) {
+        x = x - arg[1];
+    }
+    if (arg.length === 1) {
+        x = arg[0];
+    }
+    if (arg.length < 1) {
+        x = null;
+    }
+    console.log(arg[0]);
+    return x;
 }
 
+getPolynom(2, 3, 5)
 
-recursiv(num)
+console.log(Math.random());
