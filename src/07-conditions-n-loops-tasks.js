@@ -443,8 +443,24 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const testArr = [];
+  const arrLength = pathes.length;
+  let path = pathes.map((el) => el.split('/'));
+  path = path.flat();
+  path.forEach((el, index) => {
+    let counter = 1;
+    for (let i = index + 1; i < path.length; i += 1) {
+      if (el === path[i]) {
+        counter += 1;
+      }
+    }
+    if (counter === arrLength) {
+      testArr.push(el);
+    }
+  });
+  testArr.push('');
+  return testArr.join('/');
 }
 
 
@@ -466,10 +482,26 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
-}
+function getMatrixProduct(m1, m2) {
+  const rowM1 = m1.length;
+  const rowM2 = m2.length;
+  const colmM2 = m2[0].length;
+  const testArr = [];
 
+  for (let i = 0; i < rowM1; i += 1) {
+    testArr[i] = [];
+  }
+  for (let k = 0; k < colmM2; k += 1) {
+    for (let i = 0; i < rowM1; i += 1) {
+      let t = 0;
+      for (let j = 0; j < rowM2; j += 1) {
+        t += m1[i][j] * m2[j][k];
+        testArr[i][k] = t;
+      }
+    }
+  }
+  return testArr;
+}
 
 /**
  * Returns the evaluation of the specified tic-tac-toe position.
@@ -501,8 +533,37 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  /* eslint-disable prefer-destructuring */
+  let answer;
+  const xArr = [];
+  const yArr = [];
+  let zArr = [];
+  for (let i = 0; i < position.length; i += 1) {
+    if (Array.from(new Set(position[i])).length === 1 && Array.from(position[i]).length === 3) {
+      answer = position[i][0];
+    }
+    zArr = [];
+    for (let j = 0; j < position[i].length; j += 1) {
+      if (i + j === position.length - 1) {
+        xArr.push(position[i][j]);
+      }
+      if (i === j) {
+        yArr.push(position[j][i]);
+      }
+      zArr.push(position[j][i]);
+    }
+    if (Array.from(new Set(zArr)).length === 1 && position[i].length === 3) {
+      answer = zArr[0];
+    }
+  }
+  if (Array.from(new Set(xArr)).length === 1) {
+    answer = xArr[0];
+  }
+  if (Array.from(new Set(yArr)).length === 1) {
+    answer = yArr[0];
+  }
+  return answer;
 }
 
 
